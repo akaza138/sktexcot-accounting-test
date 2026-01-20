@@ -1,0 +1,301 @@
+:root {
+    --primary-blue: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-gradient-start: #1e3a8a;
+    /* Deep Blue */
+    --bg-gradient-end: #3b82f6;
+    /* Blue 500 */
+
+    --text-heading: #0f172a;
+    --text-body: #334155;
+    --text-muted: #94a3b8;
+
+    --border-light: #e2e8f0;
+    --input-focus-ring: rgba(37, 99, 235, 0.15);
+
+    --white: #ffffff;
+    --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.main-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.login-card {
+    background: var(--white);
+    width: 100%;
+    max-width: 440px;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    position: relative;
+    z-index: 10;
+}
+
+/* Header */
+.login-header {
+    background: #ffffff;
+    padding: 40px 40px 20px 40px;
+    text-align: center;
+}
+
+.brand-name {
+    color: var(--primary-blue);
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.brand-tagline {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+/* Body */
+.login-body {
+    padding: 0 40px 40px 40px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-title h2 {
+    color: var(--text-heading);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 6px 0;
+}
+
+.section-title p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 24px;
+}
+
+.input-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-heading);
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-heading);
+    transition: all 0.2s ease;
+    background: #f8fafc;
+    /* Slight contrast */
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: #ffffff;
+    box-shadow: 0 0 0 4px var(--input-focus-ring);
+}
+
+/* Role Selector */
+.role-selector {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 12px;
+    /* Slightly rounder */
+    padding: 4px;
+    position: relative;
+    /* Ensure stacking context */
+    z-index: 0;
+}
+
+.role-selector input {
+    display: none;
+}
+
+.role-selector label {
+    flex: 1;
+    text-align: center;
+    padding: 10px 4px;
+    /* Increased padding */
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    z-index: 2;
+    /* Sit above slider */
+    transition: color 0.3s ease;
+    border-radius: 8px;
+}
+
+.role-selector .slider {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc((100% - 8px) / 3);
+    /* 3 options */
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    /* Toggle easing */
+    z-index: 1;
+}
+
+/* Selected Text Color */
+#role_owner:checked~label[for="role_owner"],
+#role_accountant:checked~label[for="role_accountant"],
+#role_merchandiser:checked~label[for="role_merchandiser"] {
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+/* Slider Movement */
+#role_owner:checked~.slider {
+    transform: translateX(0%);
+}
+
+#role_accountant:checked~.slider {
+    transform: translateX(100%);
+}
+
+#role_merchandiser:checked~.slider {
+    transform: translateX(200%);
+}
+
+/* Specifics */
+.label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.forgot-link {
+    font-size: 12px;
+    color: var(--primary-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+}
+
+.password-toggle:hover {
+    color: var(--text-body);
+}
+
+.form-control {
+    /* Ensure padding-right prevents text from hiding behind icon */
+    padding-right: 40px;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+
+.btn-login:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px -1px rgba(37, 99, 235, 0.3);
+}
+
+.security-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 30px;
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+    font-weight: 500;
+    position: absolute;
+    bottom: 24px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        width: 100%;
+        max-width: none;
+        border-radius: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .main-wrapper {
+        padding: 0;
+    }
+
+    .copyright {
+        position: relative;
+        bottom: auto;
+        margin-top: 20px;
+        color: var(--text-muted);
+    }
+}

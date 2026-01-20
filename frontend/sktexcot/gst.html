@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GST Reports - SK Texcot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/table-utils.css">
+    <link rel="stylesheet" href="../assets/css/print.css" media="print">
+</head>
+
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+        <div class="main-content">
+            <div id="header-container"></div>
+
+            <div id="page-content">
+                <h1>GST Summary Report</h1>
+
+                <div
+                    style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 20px; align-items: flex-end;">
+                    <div class="form-group" style="margin:0;">
+                        <label>Month</label>
+                        <select id="month">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <!-- ... -->
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <label>Year</label>
+                        <input type="number" id="year" value="2026">
+                    </div>
+                    <button class="btn-primary" onclick="GST.loadReport()">Generate Report</button>
+                    <button onclick="window.print()">Print</button>
+                </div>
+
+                <div id="reportContent" class="hidden">
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <h3>Output GST (Sales)</h3>
+                            <div class="value" id="outTotal">0</div>
+                        </div>
+                        <div class="kpi-card">
+                            <h3>Input GST (Purchase)</h3>
+                            <div class="value" id="inTotal">0</div>
+                        </div>
+                        <div class="kpi-card">
+                            <h3>Net Payable</h3>
+                            <div class="value" id="netPayable">0</div>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-card" style="height:auto;">
+                            <h3>Breakdown</h3>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Component</th>
+                                        <th>Output (Liability)</th>
+                                        <th>Input (Credit)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>CGST</td>
+                                        <td id="outCGST">0</td>
+                                        <td id="inCGST">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SGST</td>
+                                        <td id="outSGST">0</td>
+                                        <td id="inSGST">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>IGST</td>
+                                        <td id="outIGST">0</td>
+                                        <td id="inIGST">0</td>
+                                    </tr>
+                                    <tr style="font-weight:bold;">
+                                        <td>Total</td>
+                                        <td id="outTotalInfo">0</td>
+                                        <td id="inTotalInfo">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+    </style>
+    <script src="../js/theme.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+        const GST = {
+            init: () => {
+                const d = new Date();
+                document.getElementById('month').value = d.getMonth() + 1;
+                document.getElementById('year').value = d.getFullYear();
+            },
+            loadReport: async () => {
+                const m = document.getElementById('month').value;
+                const y = document.getElementById('year').value;
+                try {
+                    const res = await Utils.api.get(`${CONFIG.ENDPOINTS.GST}?month=${m}&year=${y}`);
+                    if (res && res.success) {
+                        const d = res.data;
+                        document.getElementById('reportContent').classList.remove('hidden');
+
+                        document.getElementById('outTotal').innerText = Utils.formatCurrency(d.output_gst.total);
+                        document.getElementById('inTotal').innerText = Utils.formatCurrency(d.input_gst.total);
+                        document.getElementById('netPayable').innerText = Utils.formatCurrency(d.net_payable);
+
+                        document.getElementById('outCGST').innerText = Utils.formatCurrency(d.output_gst.cgst);
+                        document.getElementById('outSGST').innerText = Utils.formatCurrency(d.output_gst.sgst);
+                        document.getElementById('outIGST').innerText = Utils.formatCurrency(d.output_gst.igst);
+                        document.getElementById('outTotalInfo').innerText = Utils.formatCurrency(d.output_gst.total);
+
+                        document.getElementById('inCGST').innerText = Utils.formatCurrency(d.input_gst.cgst);
+                        document.getElementById('inSGST').innerText = Utils.formatCurrency(d.input_gst.sgst);
+                        document.getElementById('inIGST').innerText = Utils.formatCurrency(d.input_gst.igst);
+                        document.getElementById('inTotalInfo').innerText = Utils.formatCurrency(d.input_gst.total);
+                    }
+                } catch (e) { }
+            }
+        };
+        document.addEventListener('DOMContentLoaded', GST.init);
+    </script>
+</body>
+
+</html>

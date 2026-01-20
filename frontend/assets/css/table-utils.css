@@ -1,0 +1,68 @@
+/* Table Search and Sort Styles */
+
+.table-search-wrapper {
+    margin-bottom: 16px;
+}
+
+.search-box {
+    position: relative;
+    max-width: 400px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 40px 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+/* Sortable Table Headers */
+.data-table thead th {
+    position: relative;
+    padding-right: 24px;
+}
+
+.sort-icon {
+    position: absolute;
+    right: 8px;
+    opacity: 0.3;
+    font-size: 12px;
+    transition: opacity 0.2s;
+}
+
+.data-table thead th:hover .sort-icon {
+    opacity: 0.7;
+}
+
+.data-table thead th.sort-asc .sort-icon,
+.data-table thead th.sort-desc .sort-icon {
+    opacity: 1;
+    color: var(--primary);
+}
+
+.data-table thead th.sort-asc,
+.data-table thead th.sort-desc {
+    background: var(--primary-light);
+}
+
+/* No Results Message */
+.no-results-row td {
+    background: var(--background) !important;
+}

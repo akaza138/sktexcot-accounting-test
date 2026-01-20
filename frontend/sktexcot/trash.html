@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Delete - SK Texcot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/table-utils.css">
+    <style>
+        .trash-section {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .trash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .trash-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #1e293b;
+        }
+
+        .restore-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: background 0.2s;
+        }
+
+        .restore-btn:hover {
+            background: #059669;
+        }
+
+        .empty-trash {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .badge-type {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-company {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-billing {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-sales {
+            background: #dcfce7;
+            color: #166534;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="sidebar-container"></div>
+    <div id="header-container"></div>
+
+    <main class="content">
+        <div class="page-header">
+            <div>
+                <h1>Recent Delete</h1>
+                <p>Restore items deleted in your current session. Data is cleared on logout.</p>
+            </div>
+        </div>
+
+        <!-- Companies Trash -->
+        <div class="trash-section" id="section-company">
+            <div class="trash-header">
+                <h2>Companies</h2>
+                <span class="badge-type badge-company">Temporary</span>
+            </div>
+            <div class="table-container">
+                <table id="table-company">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>GST No</th>
+                            <th>Deleted At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-company">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Billing Trash -->
+        <div class="trash-section" id="section-billing">
+            <div class="trash-header">
+                <h2>Billings</h2>
+                <span class="badge-type badge-billing">Temporary</span>
+            </div>
+            <div class="table-container">
+                <table id="table-billing">
+                    <thead>
+                        <tr>
+                            <th>Bill Number</th>
+                            <th>Vendor</th>
+                            <th>Amount</th>
+                            <th>Deleted At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-billing">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Sales Trash -->
+        <div class="trash-section" id="section-sales">
+            <div class="trash-header">
+                <h2>Sales Entry</h2>
+                <span class="badge-type badge-sales">Temporary</span>
+            </div>
+            <div class="table-container">
+                <table id="table-sales">
+                    <thead>
+                        <tr>
+                            <th>Invoice Number</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Deleted At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-sales">
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/theme.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/trash-utils.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/trash.js"></script>
+</body>
+
+</html>

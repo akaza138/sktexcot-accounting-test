@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDS Reports - SK Texcot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/print.css" media="print">
+</head>
+
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+        <div class="main-content">
+            <div id="header-container"></div>
+
+            <div id="page-content">
+                <h1>TDS Summary Report</h1>
+
+                <div
+                    style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 20px; align-items: flex-end;">
+                    <div class="form-group" style="margin:0;">
+                        <label>Month</label>
+                        <select id="month">
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <!-- ... -->
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin:0;">
+                        <label>Year</label>
+                        <input type="number" id="year" value="2026">
+                    </div>
+                    <button class="btn-primary" onclick="TDS.loadReport()">Generate Report</button>
+                </div>
+
+                <div class="table-container">
+                    <h3>Vendor-wise TDS Liability</h3>
+                    <table class="data-table" id="tdsTable">
+                        <thead>
+                            <tr>
+                                <th>Vendor Name</th>
+                                <th>PAN</th>
+                                <th>Base Amount</th>
+                                <th>TDS Deducted</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr style="font-weight:bold; background:#f0f0f0">
+                                <td colspan="3" style="text-align:right">Total Liability:</td>
+                                <td id="totalLiability">0.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/theme.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/layout.js"></script>
+    <script>
+        const TDS = {
+            init: () => {
+                const d = new Date();
+                document.getElementById('month').value = d.getMonth() + 1;
+                document.getElementById('year').value = d.getFullYear();
+            },
+            loadReport: async () => {
+                const m = document.getElementById('month').value;
+                const y = document.getElementById('year').value;
+                try {
+                    const res = await Utils.api.get(`${CONFIG.ENDPOINTS.TDS}?month=${m}&year=${y}`);
+                    if (res && res.success) {
+                        const tbody = document.querySelector('#tdsTable tbody');
+                        tbody.innerHTML = res.data.details.map(r => `
+                            <tr>
+                                <td>${r.vendor_name}</td>
+                                <td>${r.pan || '-'}</td>
+                                <td>${Utils.formatCurrency(r.base_amount)}</td>
+                                <td>${Utils.formatCurrency(r.tds_deducted)}</td>
+                            </tr>
+                        `).join('');
+
+                        document.getElementById('totalLiability').innerText = Utils.formatCurrency(res.data.liability);
+                    }
+                } catch (e) { }
+            }
+        };
+        document.addEventListener('DOMContentLoaded', TDS.init);
+    </script>
+</body>
+
+</html>

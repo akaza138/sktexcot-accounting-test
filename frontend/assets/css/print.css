@@ -1,0 +1,221 @@
+/* ========================================
+   PRINT STYLES - Clean Print Output
+   ======================================== */
+@media print {
+
+    /* Force hide all UI navigation elements */
+    .sidebar,
+    #sidebar-container,
+    .top-header,
+    #header-container,
+    .nav-item,
+    nav,
+    .user-info,
+    .user-role-badge,
+    .page-header .fy-selector,
+    button,
+    .btn,
+    .action-btn,
+    .quick-actions-list,
+    .sidebar-widget,
+    .chart-actions,
+    input[type="button"],
+    input[type="submit"],
+    .btn-logout,
+    #listView button,
+    #formView button,
+    .hidden {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* Reset body and container */
+    body {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+
+    .app-container {
+        display: block !important;
+        width: 100% !important;
+        overflow: visible !important;
+    }
+
+    /* Main content full width */
+    .main-content {
+        margin-left: 0 !important;
+        width: 100% !important;
+        background: white !important;
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+    }
+
+    #page-content {
+        padding: 10mm !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+    }
+
+    /* Page header - keep title only */
+    .page-header {
+        margin-bottom: 10mm !important;
+        page-break-after: avoid !important;
+    }
+
+    .page-header h1 {
+        font-size: 18pt !important;
+        color: black !important;
+    }
+
+    /* Cards and containers */
+    .card,
+    .widget-card,
+    .kpi-card,
+    .gst-mini-card {
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        margin-bottom: 5mm !important;
+    }
+
+    /* Tables - print friendly */
+    table,
+    .data-table,
+    .table-container,
+    tbody,
+    thead {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 9pt !important;
+        page-break-inside: auto !important;
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+        display: table !important;
+    }
+
+    /* Remove scrolling containers */
+    .table-container,
+    .table-wrapper,
+    [style*="overflow"],
+    [style*="max-height"] {
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+    }
+
+    table thead {
+        display: table-header-group !important;
+    }
+
+    table tbody {
+        display: table-row-group !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+
+    table tr {
+        page-break-inside: avoid !important;
+        page-break-after: auto !important;
+        display: table-row !important;
+    }
+
+    table th {
+        background-color: #f0f0f0 !important;
+        color: black !important;
+        border: 1px solid #999 !important;
+        padding: 3mm !important;
+    }
+
+    table td {
+        border: 1px solid #ccc !important;
+        padding: 2mm !important;
+        color: black !important;
+    }
+
+    /* Remove backgrounds and shadows */
+    * {
+        background: white !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        transition: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        overflow: visible !important;
+        max-height: none !important;
+    }
+
+    /* Force all containers to expand */
+    div,
+    section,
+    article {
+        overflow: visible !important;
+        max-height: none !important;
+        height: auto !important;
+    }
+
+    /* Keep specific backgrounds for readability */
+    table th,
+    .status-badge {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Headers and text */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        page-break-after: avoid !important;
+        color: black !important;
+    }
+
+    p,
+    li {
+        orphans: 3 !important;
+        widows: 3 !important;
+    }
+
+    /* Charts - if any */
+    canvas {
+        max-width: 100% !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* Links */
+    a {
+        color: black !important;
+        text-decoration: underline !important;
+    }
+
+    a[href]:after {
+        content: "" !important;
+    }
+
+    /* Ensure proper spacing */
+    .kpi-row,
+    .bottom-complex-grid,
+    .gst-layout {
+        display: block !important;
+    }
+
+    /* Print specific text sizing */
+    body {
+        font-size: 10pt !important;
+        line-height: 1.4 !important;
+    }
+
+    /* Page margins */
+    @page {
+        margin: 15mm;
+        size: A4;
+    }
+}

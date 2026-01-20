@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Import - SK Texcot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+        <div class="main-content">
+            <div id="header-container"></div>
+
+            <div id="page-content">
+                <h1>Excel Import</h1>
+
+                <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3>Step 1: Upload File</h3>
+                    <p style="color:var(--gray); margin-bottom:15px;">Supported format: .xlsx with sheets 'Sales',
+                        'Purchase', 'Ledger'</p>
+                    <input type="file" id="excelFile" accept=".xlsx">
+                    <button class="btn-primary" onclick="Excel.uploadFile()">Upload & Preview</button>
+
+                    <div id="uploadStatus" style="margin-top:10px;"></div>
+                </div>
+
+                <div id="previewArea" class="hidden">
+                    <div class="page-header">
+                        <h3>Step 2: Preview & Import</h3>
+                        <button class="btn-primary" onclick="Excel.confirmImport()"
+                            style="background:var(--secondary)">Confirm Import</button>
+                    </div>
+
+                    <div id="previewContent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/theme.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/excel.js"></script>
+</body>
+
+</html>

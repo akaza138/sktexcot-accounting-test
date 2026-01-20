@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - SK Texcot</title>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+        <div class="login-card">
+            <!-- Brand Section -->
+            <div class="login-header">
+                <img src="../assets/img/logo.jpg" alt="SK Texcot" style="height: 60px; margin-bottom: 10px;">
+                <h1 class="brand-name" style="font-size: 20px;">SK Texcot</h1>
+            </div>
+
+            <div class="login-body">
+                <div class="section-title">
+                    <h2>Secure Login</h2>
+                    <p>Access your business dashboard</p>
+                </div>
+
+                <form id="loginForm">
+                    <!-- Role Selection -->
+                    <div class="form-group role-group">
+                        <label class="input-label">Select Role</label>
+                        <div class="role-selector">
+                            <input type="radio" id="role_owner" name="role" value="owner" checked>
+                            <label for="role_owner">Owner</label>
+
+                            <input type="radio" id="role_accountant" name="role" value="accountant">
+                            <label for="role_accountant">Accountant</label>
+
+                            <input type="radio" id="role_merchandiser" name="role" value="merchandiser">
+                            <label for="role_merchandiser">Merchandiser</label>
+
+                            <div class="slider"></div>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email" class="input-label">Email Address</label>
+                        <input type="email" id="email" required placeholder="name@company.com" class="form-control">
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="password" class="input-label">Password</label>
+                            <a href="#" class="forgot-link">Forgot password?</a>
+                        </div>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" required placeholder="Enter your password"
+                                class="form-control">
+                            <span class="password-toggle" onclick="togglePassword()">
+                                <!-- Eye Icon -->
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn-login">Login to Dashboard</button>
+
+                    <!-- Security Note -->
+                    <div class="security-note">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <span>Your data is encrypted & secure (256-bit SSL)</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="copyright">
+            © 2026 SK Texcot. All rights reserved.
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('password');
+            const icon = document.querySelector('.password-toggle svg');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+                icon.style.color = '#1e5bb8';
+            } else {
+                input.type = 'password';
+                icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+                icon.style.color = '#9ca3af';
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.querySelector('input[name="role"]:checked').value;
+
+            // Store selected role for reference if needed
+            localStorage.setItem('selected_role', role);
+
+            try {
+                // In real app, we might pass role to login if backend supports it, 
+                // but currently backend determines role from user record.
+                await Auth.login(email, password);
+            } catch (error) {
+                // Error handled in Auth.login
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+/* Company Detail Panel Styles */
+.company-detail-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+.company-detail-panel.hidden {
+    display: none;
+}
+
+.company-detail-panel h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 12px;
+}
+
+.detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.detail-item label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-item span {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.detail-actions button {
+    flex: 1;
+}
+
+/* Make table rows clickable */
+#companyTable tbody tr {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#companyTable tbody tr:hover {
+    background: var(--primary-light);
+    transform: scale(1.01);
+}
+
+#companyTable tbody tr.selected {
+    background: var(--primary-light);
+    border-left: 3px solid var(--primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .page-header+div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    .company-detail-panel {
+        position: static;
+        max-height: none;
+    }
+}

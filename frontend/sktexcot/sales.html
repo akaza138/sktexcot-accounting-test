@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Entry - SK Texcot</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/table-utils.css">
+    <link rel="stylesheet" href="../assets/css/print.css" media="print">
+</head>
+
+<body>
+    <div class="app-container">
+        <div id="sidebar-container"></div>
+        <div class="main-content">
+            <div id="header-container"></div>
+
+            <div id="page-content">
+                <!-- List View -->
+                <div id="listView">
+                    <div class="page-header">
+                        <h1>Sales Invoices</h1>
+                        <button class="btn-primary" onclick="Sales.showForm()">+ Create Invoice</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table" id="salesTable">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Invoice No</th>
+                                    <th>Company</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Form View (Hidden by default) -->
+                <div id="formView" class="hidden">
+                    <div class="page-header">
+                        <h1 id="formTitle">Create Invoice</h1>
+                        <button onclick="Sales.showList()">Back to List</button>
+                    </div>
+
+                    <div class="table-container" style="max-width: 800px; margin: 0 auto; padding: 30px;">
+                        <form id="salesForm">
+                            <input type="hidden" id="salesId">
+
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" id="invoice_date" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Company / Party</label>
+                                <select id="company_id" required>
+                                    <option value="">Select Company</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Process Type</label>
+                                <select id="process_type">
+                                    <option value="knitting">Knitting</option>
+                                    <option value="dyeing">Dyeing</option>
+                                    <option value="pattern">Pattern</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Item Description</label>
+                                <textarea id="item_description" rows="2"></textarea>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div class="form-group">
+                                    <label>Quantity</label>
+                                    <input type="number" id="quantity" step="0.01" required
+                                        onchange="Sales.calculateTotal()">
+                                </div>
+                                <div class="form-group">
+                                    <label>Rate</label>
+                                    <input type="number" id="rate" step="0.01" required
+                                        onchange="Sales.calculateTotal()">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                <div class="form-group">
+                                    <label>GST Type</label>
+                                    <select id="gst_type" onchange="Sales.calculateTotal()">
+                                        <option value="intra_state">Intra-State (CGST+SGST)</option>
+                                        <option value="inter_state">Inter-State (IGST)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>GST Rate (%)</label>
+                                    <select id="gst_rate" onchange="Sales.calculateTotal()">
+                                        <option value="5">5%</option>
+                                        <option value="12">12%</option>
+                                        <option value="18">18%</option>
+                                        <option value="28">28%</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="background: #f8f9fa; padding: 15px; border-radius: 4px;">
+                                <label>Total Amount: <span id="displayTotal"
+                                        style="font-size: 1.2em; font-weight: bold;">0.00</span></label>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Amount Paid (Advance/Immediate)</label>
+                                <input type="number" id="amount_paid" step="0.01" value="0">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Payment Mode</label>
+                                <select id="payment_mode">
+                                    <option value="">Select Mode</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="bank">Bank Transfer</option>
+                                    <option value="upi">UPI</option>
+                                    <option value="cheque">Cheque</option>
+                                </select>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" onclick="Sales.showList()">Cancel</button>
+                                <button type="submit" class="btn-primary">Save Invoice</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+
+    <script src="../js/theme.js"></script>
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/layout.js"></script>
+    <script src="../js/trash-utils.js"></script>
+    <script src="../js/table-utils.js"></script>
+    <script src="../js/sales.js"></script>
+</body>
+
+</html>
