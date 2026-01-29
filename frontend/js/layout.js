@@ -41,20 +41,6 @@ const Layout = {
                      <span>Recent Delete</span>
                 </a>
             </nav>
-            
-            <!-- User Info Section in Sidebar -->
-            <div class="sidebar-user-section">
-                <div class="user-avatar">
-                   <img src="../assets/img/avatar-placeholder.png" alt="User" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=007bff&color=fff'">
-                </div>
-                <div class="user-details">
-                    <div class="user-name">${userName}</div>
-                    <div class="user-role">${userRole.toUpperCase()}</div>
-                </div>
-                <button class="logout-btn" onclick="TrashUtils.clear(); Auth.logout();">
-                    <span class="logout-icon">⏻</span> Logout
-                </button>
-            </div>
         </div>
         `;
 
@@ -64,19 +50,22 @@ const Layout = {
             Layout.highlightActiveNav();
         }
 
-
-        // Header with theme toggle
+        // Header
         const header = `
         <header class="top-header">
             <div class="header-left"></div>
             <div class="header-right">
-                <button class="theme-toggle" id="theme-toggle" onclick="Theme.toggle()" aria-label="Toggle theme">
-                    <div class="theme-toggle-inner">
-                        <span class="theme-icon sun">☀️</span>
-                        <span class="theme-icon moon">🌙</span>
-                        <span class="theme-icon cloud">☁️</span>
-                        <div class="theme-slider"></div>
-                    </div>
+                <div class="user-info">
+                    <b>${userName}</b>
+                    <span class="user-role-badge">${userRole}</span>
+                </div>
+                <button class="logout-btn-header" onclick="TrashUtils.clear(); Auth.logout();" title="Logout">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Logout
                 </button>
             </div>
         </header>

@@ -41,7 +41,9 @@ const Company = {
             const selectedRow = document.querySelector(`#companyTable tbody tr[data-company-id="${id}"]`);
             if (selectedRow) selectedRow.classList.add('selected');
 
-            const c = await Utils.api.get(`${CONFIG.ENDPOINTS.COMPANY}${id}`);
+            const res = await Utils.api.get(`${CONFIG.ENDPOINTS.COMPANY}/${id}`);
+            // Extract company from response wrapper
+            const c = res.data || res;
             window.selectedCompanyId = id;
 
             document.getElementById('detail-name').textContent = c.name;
@@ -86,7 +88,7 @@ const Company = {
 
         try {
             if (id) {
-                await Utils.api.put(`${CONFIG.ENDPOINTS.COMPANY}${id}`, data);
+                await Utils.api.put(`${CONFIG.ENDPOINTS.COMPANY}/${id}`, data);
                 Utils.showToast('Company updated', 'success');
                 Company.closeModal();
                 Company.loadCompanies();
@@ -107,7 +109,7 @@ const Company = {
 
     editCompany: async (id) => {
         try {
-            const res = await Utils.api.get(`${CONFIG.ENDPOINTS.COMPANY}${id}`);
+            const res = await Utils.api.get(`${CONFIG.ENDPOINTS.COMPANY}/${id}`);
             const c = res.data;
 
             console.log('Editing company:', c);
@@ -135,12 +137,12 @@ const Company = {
         if (confirm('Are you sure you want to delete this company?')) {
             try {
                 // Fetch current data for trash before deleting
-                const res = await Utils.api.get(`${CONFIG.ENDPOINTS.COMPANY}${id}`);
+                const res = await Utils.api.get(`${CONFIG.ENDPOINTS.COMPANY}/${id}`);
                 if (res && res.success) {
                     TrashUtils.save(res.data, 'company');
                 }
 
-                await Utils.api.delete(`${CONFIG.ENDPOINTS.COMPANY}${id}`);
+                await Utils.api.delete(`${CONFIG.ENDPOINTS.COMPANY}/${id}`);
                 Utils.showToast('Company moved to Recent Delete', 'success');
                 document.getElementById('companyDetails').classList.add('hidden');
                 Company.loadCompanies();

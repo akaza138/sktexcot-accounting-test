@@ -26,6 +26,9 @@ const Theme = {
         if (toggleBtn) {
             toggleBtn.setAttribute('data-theme', theme);
         }
+
+        // Dispatch theme change event for charts and other components
+        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
     },
 
     // Toggle between light and dark

@@ -6,66 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - SK Texcot</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard-new.css">
     <link rel="stylesheet" href="../assets/css/print.css" media="print">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        /* Dashboard Specific Grid */
-        .kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            margin-bottom: 32px;
-        }
-
-        .kpi-card {
-            background: var(--surface);
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            transition: transform 0.2s;
-        }
-
-        .kpi-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .kpi-card h3 {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-light);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .kpi-card .value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 24px;
-        }
-
-        @media (max-width: 1024px) {
-            .charts-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .chart-card {
-            background: var(--surface);
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            height: 420px;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 
 <body>
@@ -74,97 +17,66 @@
         <div class="main-content">
             <div id="header-container"></div>
 
-            <div id="page-content">
-                <div class="page-header">
-                    <div class="header-left">
-                        <h1>Dashboard</h1>
-                    </div>
-                    <div class="header-right">
-                        <!-- Mock FY Dropdown -->
-                        <div class="fy-selector">
-                            <span>📅 FY 2024-25</span>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2">
-                                <path d="M6 9l6 6 6-6" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Row 1: 6 KPI Cards -->
-                <div class="kpi-row" id="kpi-container">
-                    <!-- JS Injected -->
-                </div>
-
-                <!-- Row 2: Sales vs Purchase Chart -->
-                <div class="chart-section-full mb-32">
-                    <div class="widget-card h-auto">
-                        <div class="widget-header flex-between">
-                            <h3>Monthly Sales vs Purchase</h3>
-                            <div class="chart-actions">...</div>
-                        </div>
-                        <div class="chart-container-large">
-                            <canvas id="salesChart"></canvas>
-                        </div>
+            <div id="page-content" class="dashboard-container">
+                <!-- Page Header -->
+                <div class="dashboard-page-header">
+                    <h1>Dashboard</h1>
+                    <div class="dashboard-fy-selector">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        <span>FY 2024-25</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
                     </div>
                 </div>
 
-                <!-- Row 3: Complex Bottom Grid -->
-                <div class="bottom-complex-grid">
+                <!-- KPI Cards Grid -->
+                <div class="kpi-grid" id="kpi-container">
+                    <!-- KPI cards will be injected by JavaScript -->
+                </div>
 
-                    <!-- Col 1: GST Overview (Wide - 50%) -->
-                    <div class="widget-card gst-panel">
-                        <div class="widget-header">
-                            <h3>GST Overview</h3>
+                <!-- Monthly Sales vs Purchase Chart -->
+                <div class="chart-section">
+                    <div class="chart-header">
+                        <h3>Monthly Sales vs Purchase</h3>
+                        <div class="chart-actions">
+                            <span>...</span>
                         </div>
-                        <div class="gst-layout">
-                            <!-- Left: 4 Cards Grid -->
-                            <div class="gst-cards-grid" id="gst-cards-container">
-                                <!-- JS Injected -->
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="salesPurchaseChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Bottom Grid: Top Customers + GST Overview -->
+                <div class="bottom-grid">
+                    <!-- Top Customers Panel -->
+                    <div class="customers-panel">
+                        <h3>Top Customers</h3>
+                        <div class="customers-list" id="customers-list">
+                            <!-- Customer items will be injected by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- GST Overview Panel -->
+                    <div class="gst-panel">
+                        <h3>GST Overview</h3>
+                        <div class="gst-content">
+                            <div class="gst-chart-wrapper">
+                                <canvas id="gstChart"></canvas>
                             </div>
-                            <!-- Right: Doughnut -->
-                            <div class="gst-chart-section">
-                                <div class="chart-wrapper-doughnut">
-                                    <canvas id="gstDoughnut"></canvas>
-                                </div>
-                                <div class="gst-legend" id="gst-legend">
-                                    <!-- JS Injected Legends -->
-                                </div>
+                            <div class="gst-legend" id="gst-legend">
+                                <!-- GST legend items will be injected by JavaScript -->
                             </div>
                         </div>
                     </div>
-
-                    <!-- Col 2: Top Vendors (25%) -->
-                    <div class="widget-card">
-                        <div class="widget-header">
-                            <h3>Top Vendors Outstanding</h3>
-                        </div>
-                        <div class="vendor-list" id="vendor-list-container">
-                            <!-- JS Injected -->
-                        </div>
-                    </div>
-
-                    <!-- Col 3: Quick Actions (25%) -->
-                    <div class="widget-card">
-                        <div class="widget-header">
-                            <h3>Quick Actions</h3>
-                        </div>
-                        <div class="quick-actions-list">
-                            <button onclick="window.location.href='sales.html'" class="action-btn blue">
-                                <div class="icon-box">+</div> <span>Add Sales Invoice</span>
-                            </button>
-                            <button onclick="window.location.href='billing.html'" class="action-btn blue">
-                                <div class="icon-box">+</div> <span>Add Purchase Bill</span>
-                            </button>
-                            <button onclick="window.location.href='payments.html'" class="action-btn blue">
-                                <div class="icon-box">$</div> <span>Record Payment</span>
-                            </button>
-                            <button onclick="window.location.href='excel.html'" class="action-btn blue">
-                                <div class="icon-box">↑</div> <span>Upload Excel</span>
-                            </button>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>

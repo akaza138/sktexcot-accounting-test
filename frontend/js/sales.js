@@ -93,7 +93,7 @@ const Sales = {
         try {
             if (id) {
                 // calls PUT /sales/{id}
-                await Utils.api.put(`${CONFIG.ENDPOINTS.SALES}${id}`, data);
+                await Utils.api.put(`${CONFIG.ENDPOINTS.SALES}/${id}`, data);
                 Utils.showToast('Invoice updated');
             } else {
                 await Utils.api.post(CONFIG.ENDPOINTS.SALES, data);
@@ -109,7 +109,7 @@ const Sales = {
         // For brevity, similar logic to editCompany.
         // Fetch, set values, showForm()
         try {
-            const res = await Utils.api.get(`${CONFIG.ENDPOINTS.SALES}${id}`);
+            const res = await Utils.api.get(`${CONFIG.ENDPOINTS.SALES}/${id}`);
             const s = res.data;
             document.getElementById('salesId').value = s.id;
             document.getElementById('invoice_date').value = s.invoice_date;
@@ -141,7 +141,7 @@ const Sales = {
                     TrashUtils.save(res.data, 'sales');
                 }
 
-                await Utils.api.delete(`${CONFIG.ENDPOINTS.SALES}${id}`);
+                await Utils.api.delete(`${CONFIG.ENDPOINTS.SALES}/${id}`);
                 Utils.showToast('Invoice moved to Recent Delete', 'success');
                 Sales.loadInvoices();
             } catch (e) {

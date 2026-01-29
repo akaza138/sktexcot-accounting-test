@@ -371,6 +371,33 @@ button {
     font-weight: 600;
 }
 
+/* Logout Button in Header */
+.logout-btn-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--error);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.logout-btn-header:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+}
+
+.logout-btn-header svg {
+    width: 20px;
+    height: 20px;
+}
+
 /* Page Content */
 #page-content {
     padding: 32px;
