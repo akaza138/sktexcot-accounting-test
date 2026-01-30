@@ -1,5 +1,8 @@
 const CONFIG = {
-    API_BASE_URL: window.location.port === '5500' ? 'http://localhost:8000' : '/api', // Support Live Server and Nginx proxy
+    // Use direct connection for local development, nginx proxy for production/EC2
+    API_BASE_URL: (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.port === '5500')
+        ? 'http://localhost:8000'
+        : '/api',
     ENDPOINTS: {
         LOGIN: '/auth/login',
         REFRESH: '/auth/refresh',

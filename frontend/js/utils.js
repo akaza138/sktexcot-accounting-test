@@ -54,6 +54,11 @@ const Utils = {
                 try {
                     return JSON.parse(text);
                 } catch (e) {
+                    console.error("❌ Backend returned non-JSON response:", text.substring(0, 200));
+                    // Check if HTML error page (common with CORS errors or server errors)
+                    if (text.trim().startsWith('<')) {
+                        throw new Error('Backend returned HTML error page. Possible causes: CORS error, 500 server error, or nginx error. Check browser console and backend logs.');
+                    }
                     console.warn("Response was not valid JSON:", text);
                     return null;
                 }
@@ -101,6 +106,11 @@ const Utils = {
                 try {
                     return JSON.parse(text);
                 } catch (e) {
+                    console.error("❌ Backend returned non-JSON response:", text.substring(0, 200));
+                    // Check if HTML error page
+                    if (text.trim().startsWith('<')) {
+                        throw new Error('Backend returned HTML error page. Possible causes: CORS error, 500 server error, or nginx error. Check browser console and backend logs.');
+                    }
                     console.warn("Response was not valid JSON:", text);
                     return null;
                 }

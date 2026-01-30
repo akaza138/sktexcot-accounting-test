@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from fastapi import Request
 import os
 from dotenv import load_dotenv
 
@@ -7,15 +9,25 @@ load_dotenv()
 
 app = FastAPI(title="SK Texcot API", version="1.0.0")
 
+# Handle CORS configuration with wildcard support
 origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000").split(",")
+allow_origins = ["*"] if "*" in origins else [origin.strip() for origin in origins]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=allow_origins,
+    allow_credentials=True if "*" not in allow_origins else False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Global exception handler to ensure all errors return JSON
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={"detail": str(exc), "type": type(exc).__name__}
+    )
 
 @app.get("/")
 def read_root():
